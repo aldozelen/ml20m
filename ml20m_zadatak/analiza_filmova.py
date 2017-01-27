@@ -66,13 +66,16 @@ def analiza_fimova(src,dest):
     del movie_ratings['genres']
     movie_ratings = movie_ratings.join(s)
 
-    atleast_100 = movie_stats['rating']['size'] >= 100
+    ratings_by_title = movie_ratings.groupby('title').size()
+    atleast_100 = ratings_by_title.index[ratings_by_title >= 100]
 
-    tmp_out = movie_stats[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:15]
+    atleast_100 = movie_ratings['rating']['size'] >= 100
+
+    tmp_out = movie_ratings[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:15]
     tmp_out.to_csv("atleast100_sorted.csv", sep='\t', encoding='utf-8')
 
     # Koji su najgledanijj najbolje ocijenivani filmovi
-    tmp_out = movie_stats.sort_values([('rating', 'size')], ascending=False).sort_values([('rating', 'size')], ascending=False).head()
+    tmp_out = movie_ratings.sort_values([('rating', 'size')], ascending=False).sort_values([('rating', 'size')], ascending=False).head()
     tmp_out.to_csv(("najgledaniji.csv", sep='\t', encoding='utf-8')
 
     # Standard deviation of rating grouped by title
