@@ -59,11 +59,6 @@ def analiza_fimova(src,dest):
     #Ratinzi
     movie_ratings = pd.merge(movies, ratings[['movieId','rating']])
 
-
-    s = movie_ratings['genres'].str.split('|').apply(pd.Series,1).stack()
-    s.index = s.index.droplevel(-1) # to line up with movie's index
-    s.name = 'genres'
-
     s = movie_ratings['genres'].str.split('|').apply(pd.Series,1).stack()
     s.index = s.index.droplevel(-1) # to line up with movie's index
     s.name = 'genres'
@@ -72,11 +67,21 @@ def analiza_fimova(src,dest):
     movie_ratings = movie_ratings.join(s)
 
     atleast_100 = movie_stats['rating']['size'] >= 100
-    movie_stats[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:15]
+
+    tmp_out = movie_stats[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:15]
+    tmp_out.to_csv("atleast100_sorted.csv", sep='\t', encoding='utf-8')
 
     # Koji su najgledanijj najbolje ocijenivani filmovi
-    movie_stats.sort_values([('rating', 'size')], ascending=False).sort_values([('rating', 'size')], ascending=False).head()
+    tmp_out = movie_stats.sort_values([('rating', 'size')], ascending=False).sort_values([('rating', 'size')], ascending=False).head()
+    tmp_out.to_csv(("najgledaniji.csv", sep='\t', encoding='utf-8')
 
+    # Standard deviation of rating grouped by title
+    rating_std_by_title = ratings.groupby('movieId')['rating'].std()
+    # Filter down to active_titles
+    rating_std_by_title = rating_std_by_title.ix[atleast_100]
+    # Order Series by value in descending order
+    tmp_out = rating_std_by_title.order(ascending=False)[:10]
+    tmp_out.to_csv(("kontroverzni.csv", sep='\t', encoding='utf-8')
 
 if __name__ == '__main__':
     pass
