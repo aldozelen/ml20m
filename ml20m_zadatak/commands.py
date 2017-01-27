@@ -10,9 +10,14 @@
 import urllib
 import wget
 import zipfile
+import os
+from analiza_filmova import *
 
+""" Lista konstanti """
 const_src = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
 const_dest = "/tmp/"
+const_dir_src = "/tmp/ml-20m/"
+const_dir_dest = "/tmp/ml-20m/analize"
 
 def download_unzip(src,dest):
     """
@@ -31,10 +36,19 @@ def download_unzip(src,dest):
     for x in zip_ref.namelist():
         print(dest+x)
 
-def analiza(dest):
+def analiza(src,dest):
     """
         Funkcija za vrsenje deskriptivnih analiza dataseta m10-20m
     """
+    if src == None:
+        src = const_dir_src
+
+    if dest==None:
+        dest = const_dir_dest
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+
+    analiza_fimova(src,dest)
 
 if __name__ == '__main__':
     pass
