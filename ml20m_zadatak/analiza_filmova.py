@@ -64,10 +64,6 @@ def analiza_fimova(src,dest):
     # Rating i informacije o filmovima skupa
     movie_ratings = pd.merge(movies, ratings[['movieId','rating']])
 
-    # 20 najpopularnijih filmova
-    # most_rated = movie_ratings.title.value_counts()[:20]
-    # most_rated.to_csv(dest+"20_najgledanih.csv", sep=',', encoding='utf-8',header=['Broj ocjena'])
-
     # Statistike nad ratinzima filmovima
     movie_stats = movie_ratings.groupby('title').agg({'rating': [np.size, np.mean,np.median,np.std]})
 
@@ -83,7 +79,7 @@ def analiza_fimova(src,dest):
 
     # 20 najbolje ocijenjenih filmova koji imaju barem 100 ocjena
     tmp_out = movie_stats[atleast_100].sort_values([('rating', 'mean')], ascending=False)[:20]
-    tmp_out.to_csv(dest+"20_najgledanih_m20.csv", sep=',', encoding='utf-8')
+    tmp_out.to_csv(dest+"20_najboljih_m20.csv", sep=',', encoding='utf-8')
 
     # 20 najkontroverznijih filmova koji imaju barem 1000 ocjena
     tmp_out = movie_stats[atleast_1000].sort_values([('rating', 'std')], ascending=False)[:20]

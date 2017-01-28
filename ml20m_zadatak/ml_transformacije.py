@@ -38,7 +38,9 @@ def svd_izrada(tmp,k):
     number_of_rows = len(users)
     number_of_columns = len(movies)
 
-    """ Kreiramo dictionary id-a filma/user-a i slijednog broja"""
+    """ Kreiramo dictionary id-a filma/user-a i slij
+
+    ednog broja"""
     movie_indices, user_indices = {}, {}
 
     for i in range(len(movies)):
@@ -69,7 +71,15 @@ def svd_izrada(tmp,k):
         vt = pickle.load( open( tmp+"10M_svd_vt.pickle", "rb" ) )
     else :
         t01 = time.time()
-        #u, s, vt = svds(train_matrica, k )
+        u, s, vt = svds(train_matrica, k )
+
+        with open(tmp+"10M_svd_u.pickle", 'wb') as handle:
+            pickle.dump(u, handle)
+        with open(tmp+"10M_svd_s.pickle", 'wb') as handle:
+            pickle.dump(s, handle)
+        with open(tmp+"10M_svd_vt.pickle", 'wb') as handle:
+            pickle.dump(vt, handle)
+
         t11 = time.time()
         print("Izvrsen SVD algoritam u trajanju %s s ",t11-t01)
 
@@ -107,8 +117,12 @@ def svd_izrada(tmp,k):
     t1 = time.time()
 
     print("Dataset za preporuke generiran %i s " % (t1-t0))
+    mean_square_error = mse(X_lr,Y_lr)
 
-    return mse(X_lr,Y_lr)
+    del X_lr
+    del Y_lr
+
+    return mean_square_error
 
 if __name__ == '__main__':
     pass
