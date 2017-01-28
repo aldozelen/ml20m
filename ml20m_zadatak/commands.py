@@ -50,7 +50,7 @@ def analiza(src,dest):
 
     analiza_fimova(src,dest)
 
-def svd_pokretanje(tmp,iter,k):
+def svd_pokretanje(tmp,k):
     """
        Funkcija za SVD obradu i generiranje tablice preporuka
        Funkcija ispisuje MSE algoritma

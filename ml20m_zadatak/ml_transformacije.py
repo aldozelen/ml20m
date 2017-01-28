@@ -6,11 +6,14 @@
 import pandas as pd
 import numpy as np
 import scipy.sparse as sp
-from scipy.sparse.linalg import svds
-import pickle
-from tempfile import mkdtemp
-from helper_functions import *
 import os.path as path
+import pickle
+
+from scipy.sparse.linalg import svds
+from tempfile import mkdtemp
+from pomocne_funkcije import *
+from svd_pomocne_funkcije import *
+
 
 def svd_izrada(tmp,k):
     """
@@ -72,7 +75,7 @@ def svd_izrada(tmp,k):
 
     """ Stvaranje memmapa zbog velicine matrice cc 15 GB """
     filename = path.join(mkdtemp(), 'newfile.dat')
-    X_lt = np.memmap(filename,dtype='float32',mode='w+',shape=(inter_matrix.shape[0],vt.shape[1]))
+    X_lr = np.memmap(filename,dtype='float32',mode='w+',shape=(inter_matrix.shape[0],vt.shape[1]))
 
     """ Kreiranje matrice preporuka """
     X_lr = chunking_dot(inter_matrix, vt)
@@ -84,6 +87,10 @@ def svd_izrada(tmp,k):
     for line in test.values:
         u, i , r , gona = map(int,line)
         Y_lr[user_indices[u], movie_indices[i]] = r
+
+    svd_izgradnja_liste(tmp,train_mat,user_indices,users,movies)
+
+    return mse(X_lr,Y_lr)
 
 if __name__ == '__main__':
     pass

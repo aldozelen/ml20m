@@ -3,7 +3,7 @@
 Usage:
   ml20m_zadatak.py download [--izvor=src] [--odrediste=desc]
   ml20m_zadatak.py analiza [--izvor=src] [--odrediste=desc]
-  ml20m_zadatak.py svd [--tmp = desc] [--vektori = v] [--iter = k]
+  ml20m_zadatak.py svd [--tmp = desc] [--vektori = v]
   ml20m_zadatak.py preporuke --userid=user [--br_filmova=movieno]
   ml20m_zadatak.py (-h | --help)
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         elif arguments['analiza'] :
             cm.analiza(arguments["--izvor"],arguments["--odrediste"])
         elif arguments['svd'] :
-            cm.svd_pokretanje(arguments["--tmp"],arguments["--iter"],arguments["--vektori"])
+            cm.svd_pokretanje(arguments["--tmp"],arguments["--vektori"])
         elif arguments['preporuke'] :
             cm.preporuke(arguments["--userid"],arguments["--br_filmova"])
 

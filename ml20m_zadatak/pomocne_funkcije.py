@@ -36,6 +36,7 @@ def chunking_dot(big_matrix, small_matrix, chunk_size=1000):
 def mse(X_lr,Y_lr):
     """
         Algoritam za iterativno ,memorijski sigurnije, računanje mean square error-a
+        MSE algoritam iz scipy paketa je pucao
     """
     suma = 0
     for i in range(X_lr.shape[0]):
