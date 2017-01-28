@@ -8,6 +8,7 @@ import numpy as np
 import scipy.sparse as sp
 import os.path as path
 import pickle
+import time
 
 from scipy.sparse.linalg import svds
 from tempfile import mkdtemp
@@ -21,11 +22,16 @@ def svd_izrada(tmp,k):
         Rezlutati se zapisuju kao pandas dataset pickle methodom
         Funkcija fiksno prihvaca ratings tablicu i po njoj racuna novu tablicu preporuka
     """
+    t0 = time.time()
     try:
         ratings = pd.read_csv(tmp+'ratings.csv', quotechar='"', skipinitialspace=True)
     except FileNotFoundError as e:
         print("Greska u ucitavanju datasetova")
+    t1 = time.time()
 
+    print("Ucitani podaci iz csv-a u trajanju %i s " % (t1-t0))
+
+    t0 = time.time()
     users = np.unique(ratings['userId'])
     movies = np.unique(ratings['movieId'])
 
@@ -41,30 +47,31 @@ def svd_izrada(tmp,k):
     for i in range(len(users)):
         user_indices[users[i]] = i
 
-    """" Fiksno pozivamo 10 filmova po korisniku za testni skup"""
+    """ Fiksno pozivamo 10 filmova po korisniku za testni skup """
     train, test = train_test_split_df(ratings)
 
-    """" Sparse matrica za spremanje rezultata """"
-    train_mat = sp.lil_matrix((number_of_rows, number_of_columns))
-    #test_mat  = sp.lil_matrix((number_of_rows, number_of_columns))
+    """" Sparse matrica za spremanje rezultata """
+    train_matrica = sp.lil_matrix((number_of_rows, number_of_columns))
 
-    """ Dodavanje podatak u train matricu"""
+    """ Dodavanje podatak u train matricu """
     for line in train.values:
         u, i , r , gona = map(int,line)
-        train_mat[user_indices[u], movie_indices[i]] = r
+        train_matrica[user_indices[u], movie_indices[i]] = r
+    t1 = time.time()
 
-    """" Dodavanje podatak u test matricu""""
-    """for line in test.values:
-        u, i , r , gona = map(int,line)
-        test_mat[user_indices[u], movie_indices[i]] = r"""
+    print("Ucitana training matrica  u trajanju %i s " % (t1-t0))
+    t0 = time.time()
 
-    """" Ucitavanje stvorenih matrixa """"
-    if os.path.isfile(tmp+"10M_svd_u.pickle") & os.path.isfile(tmp+"10M_svd_s.pickle") & os.path.isfile(tmp+"10M_svd_vt.pickle"):
+    """ Ucitavanje prije stvorenih matrixa """
+    if path.isfile(tmp+"10M_svd_u.pickle") & path.isfile(tmp+"10M_svd_s.pickle") & path.isfile(tmp+"10M_svd_vt.pickle"):
         u = pickle.load( open( tmp+"10M_svd_u.pickle", "rb" ) )
         s = pickle.load( open( tmp+"10M_svd_s.pickle", "rb" ) )
         vt = pickle.load( open( tmp+"10M_svd_vt.pickle", "rb" ) )
     else :
-        u, s, vt = svds(train_mat, k )
+        t01 = time.time()
+        #u, s, vt = svds(train_matrica, k )
+        t11 = time.time()
+        print("Izvrsen SVD algoritam u trajanju %s s ",t11-t01)
 
     s_diag_matrix = np.zeros((s.shape[0], s.shape[0]))
 
@@ -80,6 +87,10 @@ def svd_izrada(tmp,k):
     """ Kreiranje matrice preporuka """
     X_lr = chunking_dot(inter_matrix, vt)
 
+    t1 = time.time()
+    print("Kreirana matrica preporuka  %i s " % (t1-t0))
+    t0 = time.time()
+
     """ Kreiranje testne matrice """
     filename = path.join(mkdtemp(), 'testfile.dat')
     Y_lr = np.memmap(filename,dtype='float32',mode='w+',shape=(len(user_indices),len(movie_indices)))
@@ -88,7 +99,14 @@ def svd_izrada(tmp,k):
         u, i , r , gona = map(int,line)
         Y_lr[user_indices[u], movie_indices[i]] = r
 
-    svd_izgradnja_liste(tmp,train_mat,user_indices,users,movies)
+    t1 = time.time()
+    print("Kreiranje testne matrice %i s " % (t1-t0))
+
+    t0 = time.time()
+    svd_izgradnja_liste(tmp,X_lr,train_matrica,user_indices,users,movies)
+    t1 = time.time()
+
+    print("Dataset za preporuke generiran %i s " % (t1-t0))
 
     return mse(X_lr,Y_lr)
 

@@ -39,7 +39,7 @@ if __name__ == '__main__':
         elif arguments['svd'] :
             cm.svd_pokretanje(arguments["--tmp"],arguments["--vektori"])
         elif arguments['preporuke'] :
-            cm.preporuke(arguments["--userid"],arguments["--br_filmova"])
+            cm.preporuke(arguments["--userid"],arguments["--tmp"],arguments["--br_filmova"])
 
     # Handle invalid options
     except docopt.DocoptExit as e:

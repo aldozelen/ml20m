@@ -12,6 +12,7 @@ import zipfile
 import os
 from analiza_filmova import *
 from ml_transformacije import *
+from dohvat import *
 
 """ Lista konstanti """
 const_src = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
@@ -59,9 +60,21 @@ def svd_pokretanje(tmp,k):
         tmp = const_dir_src
     if k == None:
         k = 500
-    msr = svd_izrada(tmp,k):
+    msr = svd_izrada(tmp,k)
+
     print("Izracunati mean square error : %s",msr)
 
+def preporuke(userId,src,n):
+    """
+      Funkcija za dohvat prvih n
+    """
+    if src == None:
+        src = const_dir_src
+    if n == None:
+        n = 10
+
+    userId = int(userId)
+    dohvat_klijenta(userId,src,n)
 
 if __name__ == '__main__':
     pass
