@@ -2,7 +2,6 @@
 
 from setuptools import setup, find_packages
 
-
 with open('README.rst') as f:
     readme = f.read()
 
@@ -10,14 +9,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='sample',
+    name='ml20m_zadatak',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='Jednostavan program za rješavanje ml20 zadatka',
     long_description=readme,
-    author='Kenneth Reitz',
-    author_email='me@kennethreitz.com',
-    url='https://github.com/kennethreitz/samplemod',
+    author='Aldo Zelen',
+    author_email='azelen@gmail.com',
+    url='https://bitbucket.org/azelen/ml20m_zadatak',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
-

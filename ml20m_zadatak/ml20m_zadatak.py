@@ -43,4 +43,4 @@ if __name__ == '__main__':
 
     # Handle invalid options
     except docopt.DocoptExit as e:
-        print e.message
+        print(e.message)

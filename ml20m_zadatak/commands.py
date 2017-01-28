@@ -7,7 +7,6 @@
     4. preporuke : program predaje listu od movieno preporucenih filmova
 
 """
-import urllib
 import wget
 import zipfile
 import os
@@ -17,7 +16,7 @@ from analiza_filmova import *
 const_src = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
 const_dest = "/tmp/"
 const_dir_src = "/tmp/ml-20m/"
-const_dir_dest = "/tmp/ml-20m/analize"
+const_dir_dest = "/tmp/ml-20m/analize/"
 
 def download_unzip(src,dest):
     """
