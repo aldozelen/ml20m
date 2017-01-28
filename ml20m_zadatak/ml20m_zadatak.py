@@ -37,7 +37,7 @@ if __name__ == '__main__':
         elif arguments['analiza'] :
             cm.analiza(arguments["--izvor"],arguments["--odrediste"])
         elif arguments['svd'] :
-            cm.svd_izrada(arguments["--tmp"],arguments["--iter"],arguments["--vektori"])
+            cm.svd_pokretanje(arguments["--tmp"],arguments["--iter"],arguments["--vektori"])
         elif arguments['preporuke'] :
             cm.preporuke(arguments["--userid"],arguments["--br_filmova"])
 

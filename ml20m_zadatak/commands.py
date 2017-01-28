@@ -11,6 +11,7 @@ import wget
 import zipfile
 import os
 from analiza_filmova import *
+from ml_transformacije import *
 
 """ Lista konstanti """
 const_src = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
@@ -49,12 +50,18 @@ def analiza(src,dest):
 
     analiza_fimova(src,dest)
 
-def svd_izrada(tmp,iter,k):
+def svd_pokretanje(tmp,iter,k):
     """
        Funkcija za SVD obradu i generiranje tablice preporuka
+       Funkcija ispisuje MSE algoritma
     """
-    print(tmp)
-    pass
+    if tmp == None:
+        tmp = const_dir_src
+    if k == None:
+        k = 500
+    msr = svd_izrada(tmp,k):
+    print("Izracunati mean square error : %s",msr)
+
 
 if __name__ == '__main__':
     pass

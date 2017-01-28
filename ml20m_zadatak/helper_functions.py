@@ -5,12 +5,11 @@ from tempfile import mkdtemp
 
 def train_test_split_df(df,num_row = 10,column ='userId'):
     """
-        Funkcija za razlamanje ulaznog pandas dataframe-a na testni i
-        training skup
+        Funkcija za razlamanje ulaznog pandas dataframe-a na testni i training skup
     """
     def ranker(df,seed = 0, sample_size = 10):
         """
-            Funkcija za označavanje  sample_size odabranih brojeva
+            Funkcija za oznacavanje sample_size odabranih brojeva
         """
         np.random.seed(0)
         arr = np.array([1] * sample_size + [0] * (len(df)-sample_size))
@@ -25,7 +24,7 @@ def train_test_split_df(df,num_row = 10,column ='userId'):
 
 def chunking_dot(big_matrix, small_matrix, chunk_size=1000):
     """
-        Funkcija za sporiji memorijski sigurniji DOT produkt
+        Funkcija za sporiji, memorijski sigurniji, DOT produkt
     """
     filename = path.join(mkdtemp(), 'newfile.dat')
     R = np.memmap(filename,dtype='float32',mode='w+',shape=(big_matrix.shape[0],small_matrix.shape[1]))
@@ -36,7 +35,7 @@ def chunking_dot(big_matrix, small_matrix, chunk_size=1000):
 
 def mse(X_lr,Y_lr):
     """
-        Algoritam za iterativno računanje mean square error-a
+        Algoritam za iterativno ,memorijski sigurnije, računanje mean square error-a
     """
     suma = 0
     for i in range(X_lr.shape[0]):
