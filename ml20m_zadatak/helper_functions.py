@@ -25,7 +25,7 @@ def train_test_split_df(df,num_row = 10,column ='userId'):
 
 def chunking_dot(big_matrix, small_matrix, chunk_size=1000):
     """
-    Funkcija za sporiji memorijski sigurniji DOT produkt
+        Funkcija za sporiji memorijski sigurniji DOT produkt
     """
     filename = path.join(mkdtemp(), 'newfile.dat')
     R = np.memmap(filename,dtype='float32',mode='w+',shape=(big_matrix.shape[0],small_matrix.shape[1]))

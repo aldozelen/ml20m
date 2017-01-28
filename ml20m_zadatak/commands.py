@@ -49,5 +49,12 @@ def analiza(src,dest):
 
     analiza_fimova(src,dest)
 
+def svd_izrada(tmp,iter,k):
+    """
+       Funkcija za SVD obradu i generiranje tablice preporuka
+    """
+    print(tmp)
+    pass
+
 if __name__ == '__main__':
     pass

@@ -15,7 +15,7 @@ Arguments
   --userid = user Id usera, korisnika, za kojeg trazimo filmske preporuke
 
 Options:
-  -h --help     Show this screen
+  --help -h     Show this screen
   --izvor = src Izvor za download CSV
   --odrediste = desc Lokalna lokacija za spremanje CSV-a3
   --vektori = v Broj vektora
@@ -37,9 +37,9 @@ if __name__ == '__main__':
         elif arguments['analiza'] :
             cm.analiza(arguments["--izvor"],arguments["--odrediste"])
         elif arguments['svd'] :
-            print('svd')
+            cm.svd_izrada(arguments["--tmp"],arguments["--iter"],arguments["--vektori"])
         elif arguments['preporuke'] :
-            print('preporuke')
+            cm.preporuke(arguments["--userid"],arguments["--br_filmova"])
 
     # Handle invalid options
     except docopt.DocoptExit as e:
