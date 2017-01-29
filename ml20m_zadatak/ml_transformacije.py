@@ -61,7 +61,7 @@ def svd_izrada(tmp,k):
         train_matrica[user_indices[u], movie_indices[i]] = r
     t1 = time.time()
 
-    print("Ucitana training matrica  u trajanju %i s " % (t1-t0))
+    print("Ucitana training matrica u trajanju %i s " % (t1-t0))
     t0 = time.time()
 
     """ Ucitavanje prije stvorenih matrixa """
@@ -117,12 +117,12 @@ def svd_izrada(tmp,k):
     t1 = time.time()
 
     print("Dataset za preporuke generiran %i s " % (t1-t0))
-    mean_square_error = mse(X_lr,Y_lr)
+    mean_sqr_error = mse(X_lr,Y_lr)
 
     del X_lr
     del Y_lr
 
-    return mean_square_error
+    return mean_sqr_error
 
 if __name__ == '__main__':
     pass

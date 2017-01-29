@@ -62,7 +62,7 @@ def svd_pokretanje(tmp,k):
         k = 500
     msr = svd_izrada(tmp,k)
 
-    print("Izracunati mean square error : %i" % round(msr,7))
+    print("Izracunati mean square error : %f" % round(msr,7))
 
 def preporuke(userId,src,n):
     """
