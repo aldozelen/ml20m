@@ -1,5 +1,5 @@
 import pandas as pd
-import os.path as path
+#import os.path as path
 import numpy as np
 from tempfile import mkdtemp
 
@@ -22,12 +22,12 @@ def train_test_split_df(df,num_row = 10,column ='userId'):
     test = df[localDf['choice']==1]
     return train, test
 
-def chunking_dot(big_matrix, small_matrix, chunk_size=1000):
+def chunking_dot(R,big_matrix, small_matrix, chunk_size=1000):
     """
         Funkcija za sporiji, memorijski sigurniji, DOT produkt
     """
-    filename = path.join(mkdtemp(), 'newfile.dat')
-    R = np.memmap(filename,dtype='float32',mode='w+',shape=(big_matrix.shape[0],small_matrix.shape[1]))
+    #filename = path.join(mkdtemp(), 'newfile.dat')
+    #R = np.memmap(filename,dtype='float32',mode='w+',shape=(big_matrix.shape[0],small_matrix.shape[1]))
     for i in range(0, R.shape[0], chunk_size):
         end = i + chunk_size
         R[i:end] = np.dot(big_matrix[i:end], small_matrix)

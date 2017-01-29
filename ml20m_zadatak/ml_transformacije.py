@@ -4,6 +4,7 @@
 """
 
 import pandas as pd
+import os
 import numpy as np
 import scipy.sparse as sp
 import os.path as path
@@ -95,14 +96,14 @@ def svd_izrada(tmp,k):
     X_lr = np.memmap(filename,dtype='float32',mode='w+',shape=(inter_matrix.shape[0],vt.shape[1]))
 
     """ Kreiranje matrice preporuka """
-    X_lr = chunking_dot(inter_matrix, vt)
+    chunking_dot(X_lr,inter_matrix, vt)
 
     t1 = time.time()
     print("Kreirana matrica preporuka  %i s " % (t1-t0))
     t0 = time.time()
 
     """ Kreiranje testne matrice """
-    filename = path.join(mkdtemp(), 'testfile.dat')
+    filename_test = path.join(mkdtemp(), 'testfile.dat')
     Y_lr = np.memmap(filename,dtype='float32',mode='w+',shape=(len(user_indices),len(movie_indices)))
 
     for line in test.values:
@@ -119,8 +120,8 @@ def svd_izrada(tmp,k):
     print("Dataset za preporuke generiran %i s " % (t1-t0))
     mean_sqr_error = mse(X_lr,Y_lr)
 
-    del X_lr
-    del Y_lr
+    X_lr._mmap.close()
+    Y_lr._mmap.close()
 
     return mean_sqr_error
 
