@@ -7,11 +7,11 @@ def train_test_split_df(df,num_row = 10,column ='userId'):
     """
         Funkcija za razlamanje ulaznog pandas dataframe-a na testni i training skup
     """
-    def ranker(df,seed = 0, sample_size = 10):
+    def ranker(df,num_seed = 0, sample_size = 10):
         """
             Funkcija za oznacavanje sample_size odabranih brojeva
         """
-        np.random.seed(0)
+        np.random.seed(num_seed)
         arr = np.array([1] * sample_size + [0] * (len(df)-sample_size))
         np.random.shuffle(arr)
         df['choice'] = arr

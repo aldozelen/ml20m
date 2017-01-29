@@ -39,9 +39,7 @@ def svd_izrada(tmp,k):
     number_of_rows = len(users)
     number_of_columns = len(movies)
 
-    """ Kreiramo dictionary id-a filma/user-a i slij
-
-    ednog broja"""
+    """ Kreiramo dictionary id-a filma/user-a i slijednog broja"""
     movie_indices, user_indices = {}, {}
 
     for i in range(len(movies)):
@@ -102,9 +100,9 @@ def svd_izrada(tmp,k):
     print("Kreirana matrica preporuka  %i s " % (t1-t0))
     t0 = time.time()
 
-    """ Kreiranje testne matrice """
+    """ Kreiranje testne matrice cc 15 GB"""
     filename_test = path.join(mkdtemp(), 'testfile.dat')
-    Y_lr = np.memmap(filename,dtype='float32',mode='w+',shape=(len(user_indices),len(movie_indices)))
+    Y_lr = np.memmap(filename_test,dtype='float32',mode='w+',shape=(len(user_indices),len(movie_indices)))
 
     for line in test.values:
         u, i , r , gona = map(int,line)

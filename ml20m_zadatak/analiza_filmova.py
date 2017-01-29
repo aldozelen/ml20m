@@ -19,11 +19,11 @@ def analiza_fimova(src,dest):
         print("Greska u ucitavanju datasetova")
 
     s = movies['genres'].str.split('|').apply(pd.Series,1).stack()
-    s.index = s.index.droplevel(-1) # to line up with movie's index
+    s.index = s.index.droplevel(-1)
     s.name = 'genres'
 
     s = movies['genres'].str.split('|').apply(pd.Series,1).stack()
-    s.index = s.index.droplevel(-1) # to line up with movie's index
+    s.index = s.index.droplevel(-1) 
     s.name = 'genres'
 
     del movies['genres']

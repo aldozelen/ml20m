@@ -29,7 +29,6 @@ import commands as cm
 
 if __name__ == '__main__':
     try:
-    # Parse arguments, use file docstring as a parameter definition
         arguments = docopt(__doc__, version='Calculator with docopt')
 
         if arguments['download'] :
@@ -41,6 +40,5 @@ if __name__ == '__main__':
         elif arguments['preporuke'] :
             cm.preporuke(arguments["--userid"],arguments["--tmp"],arguments["--br_filmova"])
 
-    # Handle invalid options
     except docopt.DocoptExit as e:
         print(e.message)
